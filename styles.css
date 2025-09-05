@@ -165,3 +165,121 @@ nav .right a#theme-toggle i { cursor:pointer; }
 @media(max-width:850px){ .hero-section .text h2{ font-size:35px; } }
 @media(max-width:740px){ .hero-section{ flex-direction:column-reverse; } .hero-section .headshot img{ width:300px; } .contact-section form{ width:100%; } }
 @media(max-width:600px){ nav{ padding:0 20px; } .hero-section{ padding:0 20px; } .skills-section{ padding:0 20px; } .contact-section{ padding:0 20px; } }
+
+/* Advanced Paragraph Styling */
+p {
+  font-size: 18px;               /* גודל קריא */
+  line-height: 1.7;              /* מרווח שורות נעים לעין */
+  margin-bottom: 20px;           /* רווח בין פסקאות */
+  color: var(--text-color);      /* צבע תואם נושא */
+  letter-spacing: 0.5px;         /* קצת רווח בין אותיות */
+  transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
+}
+
+/* קלות צל עבור טקסט */
+p {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Hover effect לטקסט או לינקים בתוך פסקאות */
+p:hover {
+  transform: translateY(-2px);        /* הרמה קלה ל-hover */
+  text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* לינקים בתוך פסקאות */
+p a {
+  color: var(--link-color);
+  text-decoration: underline;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+p a:hover {
+  color: var(--button-hover-color);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Responsive adjustment */
+@media(max-width: 768px) {
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+  }
+}
+
+/* ABOUT ME SECTION */
+.about-section {
+  padding: 50px;
+  margin-bottom: 100px;
+  background-color: rgba(74, 118, 238, 0.05); /* צבע רקע עדין */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.about-section h2 {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+.about-section p {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  text-align: justify;
+}
+
+.about-section p:last-child {
+  margin-bottom: 0;
+}
+
+/* Hover effect על כל הסקשן */
+.about-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media(max-width: 768px){
+  .about-section {
+    padding: 30px 20px;
+  }
+  .about-section h2 {
+    font-size: 28px;
+  }
+  .about-section p {
+    font-size: 16px;
+  }
+}
+
+/* CONTACT INTRO TEXT - centered block */
+.contact-section > p:first-of-type {
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0 auto 30px auto;     
+  max-width: 700px;            
+  color: var(--text-color);
+  text-align: center;          
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+/* Hover subtle effect על הטקסט */
+.contact-section > p:first-of-type:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+  .contact-section > p:first-of-type {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 90%;            
+  }
+}
+
