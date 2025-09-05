@@ -66,6 +66,28 @@ nav .right a#theme-toggle i { cursor:pointer; }
       line-height: 1.6;
       margin-bottom: 25px;
     }
+
+    .hero-section .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;        
+    }
+
+    @media(max-width: 500px) {
+      .hero-section .links {
+        justify-content: center;
+      }
+    }
+    
+    .hero-section .links a {
+      display: inline-block;
+      padding: 8px 15px;
+      border: 2px solid #4a76ee;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
     .hero-section .links a {
       display: inline-block;
       padding: 8px 15px;
