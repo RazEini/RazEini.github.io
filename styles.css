@@ -186,6 +186,28 @@ p a:hover { color: var(--button-hover-color); text-decoration: none; }
 .contact-section > p:first-of-type a { color: var(--link-color); text-decoration: underline; transition: color 0.3s, text-shadow 0.3s; }
 .contact-section > p:first-of-type a:hover { color: var(--button-hover-color); text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
 
+/* FOOTER */
+.footer-section { text-align: center; padding: 20px 0; background-color: var(--background-color); color: var(--text-color); border-top: 1px solid var(--shadow-color); font-size: 14px; transition: all 0.3s ease; }
+
+/* DARK MODE CARDS AND FOOTER */
+body.dark-theme .skills-section .cells .cell {
+  background: linear-gradient(135deg, #1e1e1e, #252525);
+  box-shadow: 0 5px 15px rgba(255,255,255,0.05);
+}
+body.dark-theme .skills-section .cells .cell:hover { box-shadow: 0 12px 25px rgba(255,255,255,0.1); }
+body.dark-theme .project {
+  background: linear-gradient(135deg, #1a1a1a, #222222);
+  box-shadow: 0 8px 20px rgba(255,255,255,0.05);
+}
+body.dark-theme .project:hover { box-shadow: 0 15px 35px rgba(255,255,255,0.1); }
+body.dark-theme .about-section {
+  background: linear-gradient(135deg, rgba(90,160,255,0.05), rgba(255,255,255,0.03));
+  box-shadow: 0 8px 20px rgba(255,255,255,0.05);
+}
+body.dark-theme .about-section:hover { box-shadow: 0 12px 30px rgba(255,255,255,0.1); }
+body.dark-theme .contact-section > p:first-of-type { background-color: rgba(90,160,255,0.05); }
+body.dark-theme .footer-section { background-color: var(--dark-background-color); color: var(--dark-text-color); border-top: 1px solid var(--dark-shadow-color); }
+
 /* MEDIA QUERIES */
 @media(max-width:850px){ .hero-section .text h2{ font-size:35px; } }
 @media(max-width:740px){ 
@@ -208,24 +230,50 @@ p a:hover { color: var(--button-hover-color); text-decoration: none; }
 .fade-init { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
 .appear { opacity: 1; transform: translateY(0); }
 
-/* FOOTER */
-.footer-section { text-align: center; padding: 20px 0; background-color: var(--background-color); color: var(--text-color); border-top: 1px solid var(--shadow-color); font-size: 14px; transition: all 0.3s ease; }
+/* BACK TO TOP BUTTON */
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--link-color);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 22px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+#back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+#back-to-top:hover {
+  background-color: var(--button-hover-color);
+  transform: scale(1.1);
+}
 
-/* DARK MODE CARDS AND FOOTER */
-body.dark-theme .skills-section .cells .cell {
-  background: linear-gradient(135deg, #1e1e1e, #252525);
-  box-shadow: 0 5px 15px rgba(255,255,255,0.05);
+/* SMOOTH HOVER TRANSITIONS FOR DYNAMIC ELEMENTS */
+.hero-section .links a,
+.contact-section button,
+.skills-section .cells .cell,
+.project,
+p,
+p a {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
 }
-body.dark-theme .skills-section .cells .cell:hover { box-shadow: 0 12px 25px rgba(255,255,255,0.1); }
-body.dark-theme .project {
-  background: linear-gradient(135deg, #1a1a1a, #222222);
-  box-shadow: 0 8px 20px rgba(255,255,255,0.05);
+
+/* BACK TO TOP BUTTON DARK MODE */
+body.dark-theme #back-to-top {
+  background-color: var(--dark-link-color);
+  color: var(--dark-text-color);
 }
-body.dark-theme .project:hover { box-shadow: 0 15px 35px rgba(255,255,255,0.1); }
-body.dark-theme .about-section {
-  background: linear-gradient(135deg, rgba(90,160,255,0.05), rgba(255,255,255,0.03));
-  box-shadow: 0 8px 20px rgba(255,255,255,0.05);
+body.dark-theme #back-to-top:hover {
+  background-color: var(--dark-button-hover-color);
 }
-body.dark-theme .about-section:hover { box-shadow: 0 12px 30px rgba(255,255,255,0.1); }
-body.dark-theme .contact-section > p:first-of-type { background-color: rgba(90,160,255,0.05); }
-body.dark-theme .footer-section { background-color: var(--dark-background-color); color: var(--dark-text-color); border-top: 1px solid var(--dark-shadow-color); }
