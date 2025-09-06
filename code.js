@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('theme-toggle');
   const icon = themeToggle?.querySelector('i');
 
-  // 1. טען מצב Dark מה‑localStorage
-  if(icon && localStorage.getItem('dark-theme') === 'true') {
+  // ====== DARK MODE LOAD ======
+  if (icon && localStorage.getItem('dark-theme') === 'true') {
     document.body.classList.add('dark-theme');
     icon.classList.replace('fa-moon', 'fa-sun');
   }
 
-  // 2. Dark mode toggle עם אנימציה חלקה
+  // ====== DARK MODE TOGGLE ======
   themeToggle?.addEventListener('click', e => {
     e.preventDefault();
     document.body.classList.add('theme-transition');
@@ -26,100 +26,62 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('dark-theme', document.body.classList.contains('dark-theme'));
   });
 
-  // 3. Hover אנימציה לכפתורים
+  // ====== HOVER FUNCTION ======
+  function addHoverEffect(elements, options) {
+    elements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        requestAnimationFrame(() => {
+          Object.assign(el.style, options.enter);
+        });
+      });
+      el.addEventListener('mouseleave', () => {
+        requestAnimationFrame(() => {
+          Object.assign(el.style, options.leave);
+        });
+      });
+    });
+  }
+
+  const hoverColor = getComputedStyle(document.documentElement).getPropertyValue('--button-hover-color');
+
+  // ====== BUTTONS HOVER ======
   const buttons = document.querySelectorAll('.hero-section .links a, .contact-section button');
-  buttons.forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
-      requestAnimationFrame(() => {
-        btn.style.transform = 'scale(1.05)';
-        btn.style.boxShadow = '0 8px 20px rgba(0,0,0,0.1)';
-      });
-    });
-    btn.addEventListener('mouseleave', () => {
-      requestAnimationFrame(() => {
-        btn.style.transform = '';
-        btn.style.boxShadow = '';
-      });
-    });
+  addHoverEffect(buttons, {
+    enter: { transform: 'scale(1.05)', boxShadow: '0 8px 20px rgba(0,0,0,0.1)', backgroundColor: hoverColor, color: '#fff' },
+    leave: { transform: '', boxShadow: '', backgroundColor: '', color: '' }
   });
 
-  // 4. Hover אנימציה לכרטיסי פרויקטים
+  // ====== PROJECT CARDS HOVER ======
   const projects = document.querySelectorAll('.project');
-  projects.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      requestAnimationFrame(() => {
-        card.style.transform = 'translateY(-5px) scale(1.02)';
-        card.style.boxShadow = '0 15px 35px rgba(0,0,0,0.1)';
-      });
-    });
-    card.addEventListener('mouseleave', () => {
-      requestAnimationFrame(() => {
-        card.style.transform = '';
-        card.style.boxShadow = '';
-      });
-    });
+  addHoverEffect(projects, {
+    enter: { transform: 'translateY(-5px) scale(1.02)', boxShadow: '0 15px 35px rgba(0,0,0,0.1)' },
+    leave: { transform: '', boxShadow: '' }
   });
 
-  // 5. Hover אנימציה לכרטיסי skills
+  // ====== SKILL CELLS HOVER ======
   const skillCells = document.querySelectorAll('.skills-section .cell');
-  skillCells.forEach(cell => {
-    cell.addEventListener('mouseenter', () => {
-      requestAnimationFrame(() => {
-        cell.style.transform = 'translateY(-5px) scale(1.03)';
-        cell.style.boxShadow = '0 12px 25px rgba(0,0,0,0.15)';
-      });
-    });
-    cell.addEventListener('mouseleave', () => {
-      requestAnimationFrame(() => {
-        cell.style.transform = '';
-        cell.style.boxShadow = '';
-      });
-    });
+  addHoverEffect(skillCells, {
+    enter: { transform: 'translateY(-5px) scale(1.03)', boxShadow: '0 12px 25px rgba(0,0,0,0.15)' },
+    leave: { transform: '', boxShadow: '' }
   });
 
-  // 6. Hover עדין על פסקאות
+  // ====== PARAGRAPHS HOVER ======
   const paragraphs = document.querySelectorAll('p');
-  paragraphs.forEach(p => {
-    p.addEventListener('mouseenter', () => {
-      requestAnimationFrame(() => {
-        p.style.transform = 'translateY(-2px)';
-        p.style.textShadow = '0 2px 5px rgba(0,0,0,0.1)';
-      });
-    });
-    p.addEventListener('mouseleave', () => {
-      requestAnimationFrame(() => {
-        p.style.transform = '';
-        p.style.textShadow = '0 1px 2px rgba(0,0,0,0.05)';
-      });
-    });
+  addHoverEffect(paragraphs, {
+    enter: { transform: 'translateY(-2px)', textShadow: '0 2px 5px rgba(0,0,0,0.1)' },
+    leave: { transform: '', textShadow: '0 1px 2px rgba(0,0,0,0.05)' }
   });
 
-  // 7. Hover עדין על לינקים בתוך פסקאות
+  // ====== LINKS IN PARAGRAPHS HOVER ======
   const paragraphLinks = document.querySelectorAll('p a');
-  paragraphLinks.forEach(a => {
-    a.addEventListener('mouseenter', () => {
-      const hoverColor = getComputedStyle(document.documentElement).getPropertyValue('--button-hover-color');
-      requestAnimationFrame(() => {
-        a.style.color = hoverColor;
-        a.style.textShadow = '0 1px 2px rgba(0,0,0,0.2)';
-      });
-    });
-    a.addEventListener('mouseleave', () => {
-      const linkColor = getComputedStyle(document.documentElement).getPropertyValue('--link-color');
-      requestAnimationFrame(() => {
-        a.style.color = linkColor;
-        a.style.textShadow = '0 1px 2px rgba(0,0,0,0.05)';
-      });
-    });
+  addHoverEffect(paragraphLinks, {
+    enter: { color: hoverColor, textShadow: '0 1px 2px rgba(0,0,0,0.2)' },
+    leave: { color: getComputedStyle(document.documentElement).getPropertyValue('--link-color'), textShadow: '0 1px 2px rgba(0,0,0,0.05)' }
   });
 
-  // 8. אנימציה בעת גלילה - fade-in + slide-up
-  const faders = document.querySelectorAll('.fade-in, .project, .skills-section .cell, p');
-  const appearOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  };
-
+  // ====== FADE-IN + SLIDE-UP ON SCROLL ======
+  const faders = document.querySelectorAll('.fade-in, .project, .skills-section .cell, p, .hero-section .links a, .contact-section button');
+  const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
   const appearOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if(!entry.isIntersecting) return;
@@ -127,50 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
       observer.unobserve(entry.target);
     });
   }, appearOptions);
-
-  faders.forEach(fader => {
-    fader.classList.add('fade-init'); // הכנה לאנימציה
-    appearOnScroll.observe(fader);
+  faders.forEach(el => {
+    el.classList.add('fade-init');
+    appearOnScroll.observe(el);
   });
 
-  // 9. Back-to-top button
+  // ====== BACK TO TOP BUTTON ======
   const backToTop = document.createElement('div');
   backToTop.id = 'back-to-top';
   backToTop.innerHTML = '&#8679;';
   document.body.appendChild(backToTop);
 
   backToTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
-
   window.addEventListener('scroll', () => {
     if(window.scrollY > 400) backToTop.classList.add('show');
     else backToTop.classList.remove('show');
   });
-});
 
-// DYNAMIC HOVER COLORS FOR DARK/LIGHT MODE
-function getHoverColor() {
-  return getComputedStyle(document.documentElement).getPropertyValue('--button-hover-color');
-}
-
-const dynamicButtons = document.querySelectorAll('.hero-section .links a, .contact-section button');
-dynamicButtons.forEach(btn => {
-  btn.addEventListener('mouseenter', () => {
-    btn.style.transform = 'scale(1.05)';
-    btn.style.boxShadow = `0 8px 20px rgba(0,0,0,0.1)`;
-    btn.style.backgroundColor = getHoverColor();
-    btn.style.color = '#fff';
-  });
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = '';
-    btn.style.boxShadow = '';
-    btn.style.backgroundColor = '';
-    btn.style.color = '';
-  });
-});
-
-// FADE-IN FOR BUTTONS ON SCROLL
-const faderButtons = document.querySelectorAll('.hero-section .links a, .contact-section button');
-faderButtons.forEach(btn => {
-  btn.classList.add('fade-init');
-  appearOnScroll.observe(btn);
 });
