@@ -170,4 +170,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  const btn = document.getElementById('download-cv');
+  if (!btn) return;
+
+  btn.addEventListener('click', (e) => {
+    const spinner = btn.querySelector('.spinner');
+    // show spinner to indicate the download started
+    if (spinner) spinner.style.display = 'inline-block';
+
+    // remove spinner after a short delay (download handled by browser)
+    setTimeout(() => {
+      if (spinner) spinner.style.display = 'none';
+    }, 2000);
+
+    // Note: when using "download" attribute, browsers will try to download the file.
+    // If you prefer opening in a new tab instead of direct download, you can:
+    // btn.setAttribute('target', '_blank');
+  });
 });
