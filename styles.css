@@ -265,3 +265,23 @@ body.dark-theme #back-to-top:hover { background-color: var(--dark-button-hover-c
 .project,
 p,
 p a { transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, text-shadow 0.3s ease; }
+
+/* SPINNER ל-Contact Form */
+.contact-section button .spinner {
+  display: inline-block;       /* יראה רק בזמן שליחה */
+  margin-left: 10px;           /* ריווח קטן מהטקסט */
+  font-size: 16px;             /* גודל מתאים */
+  vertical-align: middle;
+  color: #fff;                 /* צבע לבן להתאמה עם הכפתור */
+}
+
+/* אם רוצים אנימציה מותאמת במקום Font Awesome */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.contact-section button .spinner i {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}

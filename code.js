@@ -106,4 +106,68 @@ document.addEventListener('DOMContentLoaded', () => {
     else backToTop.classList.remove('show');
   });
 
+  // ====== CONTACT FORM ======
+  const contactForm = document.querySelector('.contact-section form');
+
+  if (contactForm) {
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+
+    const buttonText = document.createElement('span');
+    buttonText.classList.add('button-text');
+    buttonText.textContent = 'Send Message';
+
+    const spinner = document.createElement('span');
+    spinner.classList.add('spinner');
+    spinner.style.display = 'none';
+    spinner.style.marginLeft = '10px';
+    spinner.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
+
+    submitButton.innerHTML = '';
+    submitButton.appendChild(buttonText);
+    submitButton.appendChild(spinner);
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      try {
+        submitButton.disabled = true;
+        buttonText.textContent = 'Sending';
+        spinner.style.display = 'inline-block';
+
+        // ====== EmailJS send ======
+        await emailjs.send(
+          'service_c29n8lo',    // Service ID
+          'template_iuvar8s',   // Template ID
+          { name, email, message },
+          '7Z8ZD6P56jwwxljw5'   // Public Key
+        );
+
+        alert('Message sent successfully!');
+        contactForm.reset();
+
+      } catch (error) {
+        console.error('Failed to send message:', error);
+        alert('Failed to send message: ' + (error.text || error.message || 'Unknown error'));
+      } finally {
+        submitButton.disabled = false;
+        buttonText.textContent = 'Send Message';
+        spinner.style.display = 'none';
+      }
+    });
+  }
 });
