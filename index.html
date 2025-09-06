@@ -22,7 +22,10 @@
     <div class="left">
       <a href="/">Raz Eini</a>
     </div>
-    <div class="right">
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+    <div class="right" id="nav-links">
       <a href="resume/Raz_Eini_resume.pdf" download>
         <i class="fa-solid fa-file-pdf"></i><span>Resume</span>
       </a>
@@ -162,5 +165,20 @@
     emailjs.init('7Z8ZD6P56jwwxljw5'); // Public Key שלך
   </script>
   <script src="code.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+
+      // לשנות את האייקון מ-bars ל-x
+      const icon = menuToggle.querySelector("i");
+      icon.classList.toggle("fa-bars");
+      icon.classList.toggle("fa-x");
+    });
+  });
+</script>
 </body>
 </html>

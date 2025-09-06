@@ -36,12 +36,71 @@ body.dark-theme {
   --button-hover-color: var(--dark-button-hover-color);
 }
 
-/* NAVBAR */
-nav { display:flex; justify-content:space-between; align-items:center; padding:0 50px; height:80px; }
-nav .left a { font-size:22px; font-weight:600; color:var(--text-color); }
-nav .right a { margin:0 10px; color:var(--text-color); }
-nav .right a span { margin-left:5px; }
-nav .right a#theme-toggle i { cursor:pointer; }
+/* NAVBAR רגיל */
+nav { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 0 50px; 
+  height: 80px; 
+  position: relative; /* חשוב לתפריט במובייל */
+}
+
+nav .left a { 
+  font-size: 22px; 
+  font-weight: 600; 
+  color: var(--text-color); 
+}
+
+nav .right a { 
+  margin: 0 10px; 
+  color: var(--text-color); 
+}
+
+nav .right a span { 
+  margin-left: 5px; 
+}
+
+nav .right a#theme-toggle i { 
+  cursor: pointer; 
+}
+
+/* הכפתור Hamburger – מוסתר במחשב */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* למובייל */
+@media (max-width: 700px) {
+  .menu-toggle {
+    display: block;
+    z-index: 1000; /* מעל כל האלמנטים */
+  }
+
+  nav .right {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    background-color: var(--background-color);
+    flex-direction: column;
+    width: 200px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 999; /* חשוב: מעל אלמנטים אחרים */
+  }
+
+  nav .right.show {
+    display: flex;
+  }
+
+  nav .right a {
+    margin: 8px 0;
+  }
+}
 
 /* HERO SECTION */
 .hero-section {
