@@ -164,6 +164,108 @@ body.dark-theme .project-desc {
 main {
   flex: 1;
 }
+
+/* ---------------- Mobile: vertical gallery ---------------- */
+@media (max-width: 768px) {
+  .showcase-gallery {
+    padding: 30px 10px;
+    margin-bottom: 60px;
+    overflow-x: hidden;
+    white-space: normal;
+  }
+
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center; /* מרכז את הפרויקטים */
+  }
+
+  .gallery-item {
+    width: 90%; /* לא תופס את כל הרוחב, נשאר מסגרת */
+    max-width: 320px; /* מגבלת גודל לפרויקט */
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 180px; /* גובה אחיד ומקובל */
+    object-fit: cover;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .gallery-info span {
+    font-size: 1rem;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+  }
+}
+
+/* ---------------- Extra Small Phones ---------------- */
+@media (max-width: 480px) {
+  .gallery-item {
+    width: 95%;   /* כמעט כל רוחב המסך */
+    max-width: 280px; /* מגבלת גודל */
+  }
+
+  .gallery-item img {
+    height: 150px; /* גובה מותאם למסך קטן */
+  }
+
+  .project-desc {
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------------- Lightbox Mobile ---------------- */
+@media (max-width: 768px) {
+  .lightbox img {
+    max-width: 90%;    /* תמונה לא תצא מגבולות המסך */
+    max-height: 50vh;  /* גובה מוגבל למחצית גובה המסך */
+  }
+
+  .lightbox .lightbox-desc {
+    font-size: 0.9rem;
+    max-width: 90%;
+    padding: 10px;
+  }
+
+  .lightbox .close,
+  .lightbox .prev,
+  .lightbox .next {
+    font-size: 30px;   /* כפתורים קטנים יותר */
+    padding: 5px;
+  }
+
+  .lightbox .proj-prev,
+  .lightbox .proj-next {
+    font-size: 25px;
+  }
+}
+
+/* ---------------- Extra Small Phones ---------------- */
+@media (max-width: 480px) {
+  .lightbox img {
+    max-width: 95%;     /* כמעט כל רוחב המסך */
+    max-height: 40vh;   /* גובה מותאם למובייל קטן */
+  }
+
+  .lightbox .lightbox-desc {
+    font-size: 0.8rem;
+  }
+
+  .lightbox .close,
+  .lightbox .prev,
+  .lightbox .next {
+    font-size: 24px;
+  }
+
+  .lightbox .proj-prev,
+  .lightbox .proj-next {
+    font-size: 20px;
+  }
+}
 </style>
 </head>
 <body>
