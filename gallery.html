@@ -458,6 +458,31 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") closeLightbox();
   });
 });
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+lightbox.addEventListener("touchstart", e => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+lightbox.addEventListener("touchend", e => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleGesture();
+});
+
+function handleGesture() {
+  const swipeThreshold = 50; // מינימום מרחק לסוויפ
+  const diffX = touchEndX - touchStartX;
+  if (Math.abs(diffX) > swipeThreshold) {
+    if (diffX > 0) {
+      showPrevImage(); // סווייפ ימינה = תמונה קודמת
+    } else {
+      showNextImage(); // סווייפ שמאלה = תמונה הבאה
+    }
+  }
+}
+
 </script>
 </body>
 </html>
