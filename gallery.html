@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Raz Eini | Showcase</title>
+<link rel="stylesheet" href="styles.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  crossorigin="anonymous"
+/>
+<style>
+/* --- Gallery Horizontal Scroll --- */
+.showcase-gallery {
+  padding: 60px 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-bottom: 120px;
+}
+
+.gallery {
+  display: flex;
+  gap: 30px;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px 16px 0 0;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item {
+  display: inline-block;
+  position: relative;
+  width: 280px;
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  background: #fff;
+  vertical-align: top;
+}
+
+.gallery-info {
+  padding: 12px 10px;
+  text-align: center;
+  background: #fafafa;
+  border-radius: 0 0 16px 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gallery-info span {
+  display: block;
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.project-desc {
+  font-size: 0.875rem;
+  color: #666;
+  line-height: 1.3;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* --- Lightbox --- */
+.lightbox {
+  position: fixed;
+  display: none;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.95);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+  flex-direction: column;
+  transition: opacity 0.3s ease;
+}
+.lightbox.show { display: flex; opacity: 1; }
+.lightbox img {
+  max-width: 90%;
+  max-height: 70%;
+  border-radius: 12px;
+  transition: opacity 0.3s ease;
+}
+.lightbox img.instant { transition: none !important; }
+
+.lightbox .lightbox-desc {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  max-width: 80%;
+}
+
+/* Navigation Buttons */
+.lightbox .close, .lightbox .prev, .lightbox .next, .lightbox .proj-prev, .lightbox .proj-next {
+  position: absolute;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px;
+  transition: color 0.3s;
+}
+.lightbox .close:hover,
+.lightbox .prev:hover,
+.lightbox .next:hover,
+.lightbox .proj-prev:hover,
+.lightbox .proj-next:hover { color: #4a76ee; }
+
+.lightbox .close { top: 30px; right: 40px; }
+.lightbox .prev { top: 50%; left: 30px; transform: translateY(-50%); }
+.lightbox .next { top: 50%; right: 30px; transform: translateY(-50%); }
+.lightbox .proj-prev { bottom: 50px; left: 30px; font-size: 30px; }
+.lightbox .proj-next { bottom: 50px; right: 30px; font-size: 30px; }
+
+/* Dark mode */
+body.dark-theme .gallery-item span { color: var(--dark-text-color); }
+
+/* --- Footer spacing --- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- Dark Mode for Gallery --- */
+body.dark-theme .gallery-item {
+  background-color: #2a2a2a;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+body.dark-theme .gallery-info {
+  background-color: #2a2a2a;
+}
+
+body.dark-theme .gallery-info span {
+  color: #f0f0f0;
+}
+
+body.dark-theme .project-desc {
+  color: #ccc;
+}
+
+main {
+  flex: 1;
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="left"><a href="index.html">Raz Eini</a></div>
+  <div class="menu-toggle" id="menu-toggle">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+  <div class="right" id="nav-links">
+    <a href="resume/Raz_Eini_resume.pdf" download>
+      <i class="fa-solid fa-file-pdf"></i><span>Resume</span>
+    </a>
+    <a href="https://github.com/RazEini" target="_blank" rel="noopener noreferrer">
+      <i class="fa-brands fa-github"></i><span>Github</span>
+    </a>
+    <a href="mailto:razeini972@gmail.com">
+      <i class="fa-solid fa-envelope"></i><span>Email</span>
+    </a>
+    <a href="index.html">
+      <i class="fa-solid fa-house"></i><span>HomePage</span>
+    </a>
+    <a href="#" id="theme-toggle" aria-label="Toggle Dark/Light Theme">
+      <i class="fa-solid fa-moon"></i>
+    </a>
+  </div>
+</nav>
+
+<main>
+<section class="hero-section fade-in">
+  <h2>Project Showcase</h2>
+</section>
+
+<section class="showcase-gallery fade-in">
+  <div class="gallery">
+    <div class="gallery-item" data-project="0">
+      <img src="images/e_commerce_shop_image1.PNG" alt="E-Commerce_Shop Screenshot" />
+      <div class="gallery-info">
+        <span>E-Commerce Shop</span>
+        <p class="project-desc">Developed a full-featured Android shopping app with authentication,
+            real-time database, smart search, voice input, and role-based access
+            (user & admin panels).</p>
+      </div>
+    </div>
+    <div class="gallery-item" data-project="1">
+      <img src="images/taskflow_image1.PNG" alt="Smart_Task_Flow Screenshot" />
+      <div class="gallery-info">
+        <span>Smart TaskFlow</span>
+        <p class="project-desc">Task management application with automated classification, real-time
+            search, date grouping, gesture controls, and Material 3 UI.</p>
+      </div>
+    </div>
+    <div class="gallery-item" data-project="2">
+      <img src="images/tetris_image1.PNG" alt="Tetris Screenshot" />
+      <div class="gallery-info">
+        <span>Tetris</span>
+        <p class="project-desc">Desktop game implementing animations, ghost blocks, scoring,
+            difficulty scaling, and background music.</p>
+      </div>
+    </div>
+    <div class="gallery-item" data-project="3">
+      <img src="images/password_manager_image1.PNG" alt="Password_Manager Screenshot" />
+      <div class="gallery-info">
+        <span>Password Manager</span>
+        <p class="project-desc">Cross-platform password manager with secure encryption, CLI & GUI
+            support, password strength analysis, and clipboard copy
+            functionality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <span class="close" id="lightbox-close">&times;</span>
+  <span class="prev" id="lightbox-prev">&#10094;</span>
+  <span class="next" id="lightbox-next">&#10095;</span>
+  <span class="proj-prev" id="lightbox-proj-prev">&#8678; Prev Project</span>
+  <span class="proj-next" id="lightbox-proj-next">Next Project &#8680;</span>
+  <img src="" alt="Expanded Project" id="lightbox-current" />
+  <div class="lightbox-desc" id="lightbox-desc"></div>
+</div>
+
+<footer class="footer-section">
+  <p>© 2025 Raz Eini. All rights reserved.</p>
+</footer>
+</main>
+
+<script src="code.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menu-toggle");
+  const navLinks = document.getElementById("nav-links");
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+    const icon = menuToggle.querySelector("i");
+    icon.classList.toggle("fa-bars");
+    icon.classList.toggle("fa-x");
+  });
+
+  const projects = [
+    ["images/e_commerce_shop_image1.PNG","images/e_commerce_shop_image2.PNG","images/e_commerce_shop_image3.PNG"],
+    ["images/taskflow_image1.PNG","images/taskflow_image2.PNG","images/taskflow_image3.PNG"],
+    ["images/tetris_image1.PNG","images/tetris_image2.PNG","images/tetris_image3.PNG"],
+    ["images/password_manager_image1.PNG","images/password_manager_image2.PNG"]
+  ];
+
+  const galleryItems = document.querySelectorAll(".gallery-item");
+  const lightbox = document.getElementById("lightbox");
+  const lbCurrent = document.getElementById("lightbox-current");
+  const lbDesc = document.getElementById("lightbox-desc");
+  const lbClose = document.getElementById("lightbox-close");
+  const lbPrev = document.getElementById("lightbox-prev");
+  const lbNext = document.getElementById("lightbox-next");
+  const lbProjPrev = document.getElementById("lightbox-proj-prev");
+  const lbProjNext = document.getElementById("lightbox-proj-next");
+
+  let currentProject = 0;
+  let currentImage = 0;
+
+  // פונקציה להחזרת הפירוט מתוך ה-gallery-item
+  function getProjectDescription(index) {
+    return galleryItems[index].querySelector(".project-desc").innerHTML;
+  }
+
+  function openLightbox(projIndex) {
+    currentProject = projIndex;
+    currentImage = 0;
+    lbCurrent.src = projects[currentProject][currentImage];
+    lbDesc.innerHTML = getProjectDescription(currentProject); // שימוש ב-innerHTML
+    lightbox.classList.add("show");
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("show");
+    lbCurrent.src = "";
+    lbDesc.innerHTML = "";
+  }
+
+  function showNextImage() {
+    currentImage = (currentImage + 1) % projects[currentProject].length;
+    fadeTo(projects[currentProject][currentImage]);
+  }
+
+  function showPrevImage() {
+    currentImage = (currentImage - 1 + projects[currentProject].length) % projects[currentProject].length;
+    fadeTo(projects[currentProject][currentImage]);
+  }
+
+  function fadeTo(src) {
+    lbCurrent.style.transition = "opacity 0.3s ease";
+    lbCurrent.style.opacity = 0;
+    setTimeout(() => {
+      lbCurrent.src = src;
+      lbCurrent.style.opacity = 1;
+      lbDesc.innerHTML = galleryItems[currentProject].querySelector(".project-desc").innerHTML;
+    }, 200);
+  }
+
+  function showNextProject() {
+    currentProject = (currentProject + 1) % projects.length;
+    currentImage = 0;
+    lbCurrent.src = projects[currentProject][currentImage];
+    lbDesc.innerHTML = galleryItems[currentProject].querySelector(".project-desc").innerHTML;
+  }
+
+  function showPrevProject() {
+    currentProject = (currentProject - 1 + projects.length) % projects.length;
+    currentImage = 0;
+    lbCurrent.src = projects[currentProject][currentImage];
+    lbDesc.innerHTML = galleryItems[currentProject].querySelector(".project-desc").innerHTML;
+  }
+
+  galleryItems.forEach((item, index) => {
+    item.addEventListener("click", () => openLightbox(index));
+  });
+
+  lbClose.addEventListener("click", closeLightbox);
+  lbNext.addEventListener("click", showNextImage);
+  lbPrev.addEventListener("click", showPrevImage);
+  lbProjNext.addEventListener("click", showNextProject);
+  lbProjPrev.addEventListener("click", showPrevProject);
+
+  lightbox.addEventListener("click", e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", e => {
+    if (!lightbox.classList.contains("show")) return;
+    if (e.key === "ArrowRight") showNextImage();
+    if (e.key === "ArrowLeft") showPrevImage();
+    if (e.key === "Escape") closeLightbox();
+  });
+});
+</script>
+</body>
+</html>
