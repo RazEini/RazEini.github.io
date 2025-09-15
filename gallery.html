@@ -410,6 +410,37 @@ document.addEventListener("DOMContentLoaded", () => {
     lbDesc.innerHTML = "";
   }
 
+  if (window.innerWidth <= 768) { // סווייפ רק במובייל
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  lightbox.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  lightbox.addEventListener("touchmove", e => {
+    e.preventDefault(); // מונע גלילה בזמן סווייפ
+  });
+
+  lightbox.addEventListener("touchend", e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+  });
+
+  function handleGesture() {
+    const swipeThreshold = 50; // מינימום מרחק לסוויפ
+    const diffX = touchEndX - touchStartX;
+
+    if (Math.abs(diffX) > swipeThreshold) {
+      if (diffX > 0) {
+        showPrevImage(); // סווייפ ימינה = תמונה קודמת
+      } else {
+        showNextImage(); // סווייפ שמאלה = תמונה הבאה
+      }
+    }
+  }
+}
+
   function showNextImage() {
     currentImage = (currentImage + 1) % projects[currentProject].length;
     fadeTo(projects[currentProject][currentImage]);
@@ -465,32 +496,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") closeLightbox();
   });
 });
-
-if (window.innerWidth <= 768) { // סווייפ רק במובייל
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  lbCurrent.addEventListener("touchstart", e => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
-
-  lbCurrent.addEventListener("touchend", e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleGesture();
-  });
-
-  function handleGesture() {
-    const swipeThreshold = 50;
-    const diffX = touchEndX - touchStartX;
-    if (Math.abs(diffX) > swipeThreshold) {
-      if (diffX > 0) {
-        showPrevImage(); // סווייפ ימינה
-      } else {
-        showNextImage(); // סווייפ שמאלה
-      }
-    }
-  }
-}
 </script>
 </body>
 </html>
