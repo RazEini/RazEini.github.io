@@ -133,6 +133,29 @@
 .lightbox .proj-prev { bottom: 50px; left: 30px; font-size: 30px; }
 .lightbox .proj-next { bottom: 50px; right: 30px; font-size: 30px; }
 
+/* Dots */
+.lightbox .dots {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  width: 100%;
+  pointer-events: none; /* מונע לחיצות על הרקע */
+}
+
+.lightbox .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5); /* השתמש ב-background-color במקום background */
+  transition: background-color 0.3s ease; /* מעבר חלק כשפעיל */
+}
+
+.lightbox .dot.active {
+  background-color: #fff; /* השתמש ב-background-color כדי למנוע אזהרות */
+}
+
 /* Dark mode */
 body.dark-theme .gallery-item span { color: var(--dark-text-color); }
 
@@ -178,17 +201,17 @@ main {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    align-items: center; /* מרכז את הפרויקטים */
+    align-items: center;
   }
 
   .gallery-item {
-    width: 90%; /* לא תופס את כל הרוחב, נשאר מסגרת */
-    max-width: 320px; /* מגבלת גודל לפרויקט */
+    width: 90%;
+    max-width: 320px;
   }
 
   .gallery-item img {
     width: 100%;
-    height: 180px; /* גובה אחיד ומקובל */
+    height: 180px;
     object-fit: cover;
     border-radius: 16px 16px 0 0;
   }
@@ -200,64 +223,50 @@ main {
   .project-desc {
     font-size: 0.85rem;
   }
+
+  /* Hide arrows on mobile */
+  .lightbox .prev,
+  .lightbox .next {
+    display: none;
+  }
+
+  /* Mobile dots positioning */
+  .lightbox .dots {
+    bottom: 15px;  /* קרוב לתחתית המסך */
+    gap: 5px;
+  }
+
+  .lightbox .dot {
+    width: 8px;
+    height: 8px;
+  }
 }
 
 /* ---------------- Extra Small Phones ---------------- */
 @media (max-width: 480px) {
   .gallery-item {
-    width: 95%;   /* כמעט כל רוחב המסך */
-    max-width: 280px; /* מגבלת גודל */
+    width: 95%;
+    max-width: 280px;
   }
 
   .gallery-item img {
-    height: 150px; /* גובה מותאם למסך קטן */
+    height: 150px;
   }
 
   .project-desc {
     font-size: 0.8rem;
   }
-}
 
-/* ---------------- Lightbox Mobile ---------------- */
-@media (max-width: 768px) {
   .lightbox img {
-    max-width: 90%;    /* תמונה לא תצא מגבולות המסך */
-    max-height: 50vh;  /* גובה מוגבל למחצית גובה המסך */
-  }
-
-  .lightbox .lightbox-desc {
-    font-size: 0.9rem;
-    max-width: 90%;
-    padding: 10px;
-  }
-
-  .lightbox .close,
-  .lightbox .prev,
-  .lightbox .next {
-    font-size: 30px;   /* כפתורים קטנים יותר */
-    padding: 5px;
-  }
-
-  .lightbox .proj-prev,
-  .lightbox .proj-next {
-    font-size: 25px;
-  }
-}
-
-/* ---------------- Extra Small Phones ---------------- */
-@media (max-width: 480px) {
-  .lightbox img {
-    max-width: 95%;     /* כמעט כל רוחב המסך */
-    max-height: 40vh;   /* גובה מותאם למובייל קטן */
+    max-width: 95%;
+    max-height: 40vh;
   }
 
   .lightbox .lightbox-desc {
     font-size: 0.8rem;
   }
 
-  .lightbox .close,
-  .lightbox .prev,
-  .lightbox .next {
+  .lightbox .close {
     font-size: 24px;
   }
 
@@ -265,12 +274,15 @@ main {
   .lightbox .proj-next {
     font-size: 20px;
   }
-}
 
-@media (max-width: 768px) {
-  .lightbox .prev,
-  .lightbox .next {
-    display: none; /* מחביאים חיצי ניווט */
+  .lightbox .dots {
+    bottom: 10px; /* עוד יותר קרוב לתחתית */
+    gap: 4px;
+  }
+
+  .lightbox .dot {
+    width: 7px;
+    height: 7px;
   }
 }
 </style>
@@ -333,7 +345,7 @@ main {
       </div>
     </div>
     <div class="gallery-item" data-project="3">
-      <img src="images/password_manager_image1.PNG" alt="Password_Manager Screenshot" />
+      <img src="images/password_manager_image1.PNG" alt="Password Manager Screenshot" />
       <div class="gallery-info">
         <span>Password Manager</span>
         <p class="project-desc">Cross-platform password manager with secure encryption, CLI & GUI
@@ -352,6 +364,7 @@ main {
   <span class="proj-next" id="lightbox-proj-next">Next Project &#8680;</span>
   <img src="" alt="Expanded Project" id="lightbox-current" />
   <div class="lightbox-desc" id="lightbox-desc"></div>
+  <div class="dots" id="lightbox-dots"></div>
 </div>
 
 <footer class="footer-section">
@@ -387,59 +400,51 @@ document.addEventListener("DOMContentLoaded", () => {
   const lbNext = document.getElementById("lightbox-next");
   const lbProjPrev = document.getElementById("lightbox-proj-prev");
   const lbProjNext = document.getElementById("lightbox-proj-next");
+  const lbDots = document.getElementById("lightbox-dots");
 
   let currentProject = 0;
   let currentImage = 0;
 
-  // פונקציה להחזרת הפירוט מתוך ה-gallery-item
   function getProjectDescription(index) {
     return galleryItems[index].querySelector(".project-desc").innerHTML;
+  }
+
+  function updateDots() {
+    lbDots.innerHTML = "";
+    const count = projects[currentProject].length;
+    for(let i=0;i<count;i++){
+      const dot = document.createElement("span");
+      dot.className = "dot" + (i===currentImage?" active":"");
+      lbDots.appendChild(dot);
+    }
   }
 
   function openLightbox(projIndex) {
     currentProject = projIndex;
     currentImage = 0;
     lbCurrent.src = projects[currentProject][currentImage];
-    lbDesc.innerHTML = getProjectDescription(currentProject); // שימוש ב-innerHTML
+    lbDesc.innerHTML = getProjectDescription(currentProject);
     lightbox.classList.add("show");
+    updateDots();
   }
 
   function closeLightbox() {
     lightbox.classList.remove("show");
     lbCurrent.src = "";
     lbDesc.innerHTML = "";
+    lbDots.innerHTML = "";
   }
 
-  if (window.innerWidth <= 768) { // סווייפ רק במובייל
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  lightbox.addEventListener("touchstart", e => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
-
-  lightbox.addEventListener("touchmove", e => {
-    e.preventDefault(); // מונע גלילה בזמן סווייפ
-  });
-
-  lightbox.addEventListener("touchend", e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleGesture();
-  });
-
-  function handleGesture() {
-    const swipeThreshold = 50; // מינימום מרחק לסוויפ
-    const diffX = touchEndX - touchStartX;
-
-    if (Math.abs(diffX) > swipeThreshold) {
-      if (diffX > 0) {
-        showPrevImage(); // סווייפ ימינה = תמונה קודמת
-      } else {
-        showNextImage(); // סווייפ שמאלה = תמונה הבאה
-      }
-    }
+  function fadeTo(src) {
+    lbCurrent.style.transition = "opacity 0.3s ease";
+    lbCurrent.style.opacity = 0;
+    setTimeout(() => {
+      lbCurrent.src = src;
+      lbCurrent.style.opacity = 1;
+      lbDesc.innerHTML = galleryItems[currentProject].querySelector(".project-desc").innerHTML;
+      updateDots();
+    }, 200);
   }
-}
 
   function showNextImage() {
     currentImage = (currentImage + 1) % projects[currentProject].length;
@@ -451,21 +456,12 @@ document.addEventListener("DOMContentLoaded", () => {
     fadeTo(projects[currentProject][currentImage]);
   }
 
-  function fadeTo(src) {
-    lbCurrent.style.transition = "opacity 0.3s ease";
-    lbCurrent.style.opacity = 0;
-    setTimeout(() => {
-      lbCurrent.src = src;
-      lbCurrent.style.opacity = 1;
-      lbDesc.innerHTML = galleryItems[currentProject].querySelector(".project-desc").innerHTML;
-    }, 200);
-  }
-
   function showNextProject() {
     currentProject = (currentProject + 1) % projects.length;
     currentImage = 0;
     lbCurrent.src = projects[currentProject][currentImage];
     lbDesc.innerHTML = galleryItems[currentProject].querySelector(".project-desc").innerHTML;
+    updateDots();
   }
 
   function showPrevProject() {
@@ -473,6 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentImage = 0;
     lbCurrent.src = projects[currentProject][currentImage];
     lbDesc.innerHTML = galleryItems[currentProject].querySelector(".project-desc").innerHTML;
+    updateDots();
   }
 
   galleryItems.forEach((item, index) => {
@@ -495,6 +492,30 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "ArrowLeft") showPrevImage();
     if (e.key === "Escape") closeLightbox();
   });
+
+  if (window.innerWidth <= 768) {
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  lightbox.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  lightbox.addEventListener("touchmove", e => {
+    e.preventDefault(); // מונע גלילה בזמן סווייפ
+  });
+
+  lightbox.addEventListener("touchend", e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diffX = touchEndX - touchStartX;
+    const swipeThreshold = 50;
+
+    if (Math.abs(diffX) > swipeThreshold) {
+      if (diffX > 0) showPrevImage(); // סווייפ ימינה
+      else showNextImage();            // סווייפ שמאלה
+    }
+  });
+}
 });
 </script>
 </body>
